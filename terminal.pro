@@ -1,9 +1,14 @@
+## set the QTC_SOURCE environment variable to override the setting here
+QTCREATOR_SOURCES = $$(QTC_SOURCE)
+## set the QTC_BUILD environment variable to override the setting here
+IDE_BUILD_TREE = $$(QTC_BUILD)
+
 TEMPLATE = lib
 TARGET = Terminal
 
-include(../../qtcreatorplugin.pri)
-include(../../plugins/coreplugin/coreplugin.pri)
-include(../../plugins/texteditor/texteditor.pri)
+include($$QTCREATOR_SOURCES/src/qtcreatorplugin.pri)
+include($$QTCREATOR_SOURCES/src/plugins/coreplugin/coreplugin.pri)
+include($$QTCREATOR_SOURCES/src/plugins/texteditor/texteditor.pri)
 
 DEPENDPATH += . qtermwidget/lib
 INCLUDEPATH += . qtermwidget/lib

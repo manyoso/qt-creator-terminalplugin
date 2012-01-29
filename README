@@ -1,0 +1,6 @@
+Compilation
+
+To compile the terminalplugin, you need to define two environment variables:
+1. QTC_SOURCE: source directory of Qt Creator
+2. QTC_BUILD: build directory of Qt Creator
+Those variables should be absolute path and should be defined for the qmake step.
