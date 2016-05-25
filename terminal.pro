@@ -1,77 +1,39 @@
-## set the QTC_SOURCE environment variable to override the setting here
-QTCREATOR_SOURCES = $$(QTC_SOURCE)
-## set the QTC_BUILD environment variable to override the setting here
-IDE_BUILD_TREE = $$(QTC_BUILD)
-
-TEMPLATE = lib
-TARGET = Terminal
-
-include($$QTCREATOR_SOURCES/src/qtcreatorplugin.pri)
-include($$QTCREATOR_SOURCES/src/plugins/coreplugin/coreplugin.pri)
-include($$QTCREATOR_SOURCES/src/plugins/texteditor/texteditor.pri)
-
-DEPENDPATH += . qtermwidget/lib
-INCLUDEPATH += . qtermwidget/lib
-DEFINES += HAVE_POSIX_OPENPT HAVE_SYS_TIME_H BUNDLE_COLORSCHEMES BUNDLE_KEYBOARDLAYOUTS
-
-macx {
-DEFINES += HAVE_UTMPX _UTMPX_COMPAT
-}
+DEFINES += TERMINALPLUGIN_LIBRARY
 
 HEADERS += terminalplugin.h \
-           terminalwindow.h \
-           qtermwidget/lib/BlockArray.h \
-           qtermwidget/lib/Character.h \
-           qtermwidget/lib/CharacterColor.h \
-           qtermwidget/lib/ColorScheme.h \
-           qtermwidget/lib/ColorTables.h \
-           qtermwidget/lib/DefaultTranslatorText.h \
-           qtermwidget/lib/Emulation.h \
-           qtermwidget/lib/ExtendedDefaultTranslator.h \
-           qtermwidget/lib/Filter.h \
-           qtermwidget/lib/History.h \
-           qtermwidget/lib/KeyboardTranslator.h \
-           qtermwidget/lib/konsole_wcwidth.h \
-           qtermwidget/lib/kprocess.h \
-           qtermwidget/lib/kpty.h \
-           qtermwidget/lib/kpty_p.h \
-           qtermwidget/lib/kptydevice.h \
-           qtermwidget/lib/kptyprocess.h \
-           qtermwidget/lib/LineFont.h \
-           qtermwidget/lib/Pty.h \
-           qtermwidget/lib/qtermwidget.h \
-           qtermwidget/lib/Screen.h \
-           qtermwidget/lib/ScreenWindow.h \
-           qtermwidget/lib/Session.h \
-           qtermwidget/lib/ShellCommand.h \
-           qtermwidget/lib/TerminalCharacterDecoder.h \
-           qtermwidget/lib/TerminalDisplay.h \
-           qtermwidget/lib/tools.h \
-           qtermwidget/lib/Vt102Emulation.h
+           terminalwindow.h
 
 SOURCES += terminalplugin.cpp \
-           terminalwindow.cpp \
-           qtermwidget/lib/BlockArray.cpp \
-           qtermwidget/lib/ColorScheme.cpp \
-           qtermwidget/lib/Emulation.cpp \
-           qtermwidget/lib/Filter.cpp \
-           qtermwidget/lib/History.cpp \
-           qtermwidget/lib/KeyboardTranslator.cpp \
-           qtermwidget/lib/konsole_wcwidth.cpp \
-           qtermwidget/lib/kprocess.cpp \
-           qtermwidget/lib/kpty.cpp \
-           qtermwidget/lib/kptydevice.cpp \
-           qtermwidget/lib/kptyprocess.cpp \
-           qtermwidget/lib/Pty.cpp \
-           qtermwidget/lib/qtermwidget.cpp \
-           qtermwidget/lib/Screen.cpp \
-           qtermwidget/lib/ScreenWindow.cpp \
-           qtermwidget/lib/Session.cpp \
-           qtermwidget/lib/ShellCommand.cpp \
-           qtermwidget/lib/TerminalCharacterDecoder.cpp \
-           qtermwidget/lib/TerminalDisplay.cpp \
-           qtermwidget/lib/tools.cpp \
-           qtermwidget/lib/Vt102Emulation.cpp
+           terminalwindow.cpp
 
-RESOURCES += qtermwidget/lib/color-schemes/color-schemes.qrc \
-             qtermwidget/lib/kb-layouts/kb-layouts.qrc
+INCLUDEPATH += /usr/local/include
+
+## set the QTC_SOURCE environment variable to override the setting here
+QTCREATOR_SOURCES = $$(QTC_SOURCE)
+isEmpty(QTCREATOR_SOURCES):QTCREATOR_SOURCES=/Users/atreat/dev/qt-creator
+
+## set the QTC_BUILD environment variable to override the setting here
+IDE_BUILD_TREE = $$(QTC_BUILD)
+isEmpty(IDE_BUILD_TREE):IDE_BUILD_TREE=/Users/atreat/dev/qt-creator-build
+
+## uncomment to build plugin into user config directory
+## <localappdata>/plugins/<ideversion>
+##    where <localappdata> is e.g.
+##    "%LOCALAPPDATA%\QtProject\qtcreator" on Windows Vista and later
+##    "$XDG_DATA_HOME/data/QtProject/qtcreator" or "~/.local/share/data/QtProject/qtcreator" on Linux
+##    "~/Library/Application Support/QtProject/Qt Creator" on OS X
+#USE_USER_DESTDIR = yes
+
+QTC_PLUGIN_NAME = TerminalPlugin
+QTC_LIB_DEPENDS += \
+    # nothing here at this time
+
+QTC_PLUGIN_DEPENDS += \
+    coreplugin texteditor
+
+QTC_PLUGIN_RECOMMENDS += \
+    # optional plugin dependencies. nothing here at this time
+
+LIBS += -L../qtermwidget/build -lqtermwidget5
+
+include($$QTCREATOR_SOURCES/src/qtcreatorplugin.pri)

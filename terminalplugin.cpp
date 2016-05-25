@@ -16,10 +16,10 @@
 
 #include <QtCore/QDebug>
 #include <QtCore/QtPlugin>
-#include <QtGui/QAction>
-#include <QtGui/QMenu>
-#include <QtGui/QMessageBox>
-#include <QtGui/QPushButton>
+#include <QAction>
+#include <QMenu>
+#include <QMessageBox>
+#include <QPushButton>
 
 namespace Terminal {
 namespace Internal {
@@ -78,5 +78,3 @@ void TerminalPlugin::extensionsInitialized()
 
 } // namespace Internal
 } // namespace Terminal
-
-Q_EXPORT_PLUGIN(Terminal::Internal::TerminalPlugin)

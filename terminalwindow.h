@@ -9,11 +9,41 @@
 #include <coreplugin/ioutputpane.h>
 
 QT_FORWARD_DECLARE_CLASS(QLabel)
+QT_FORWARD_DECLARE_CLASS(QVBoxLayout)
+QT_FORWARD_DECLARE_CLASS(QTermWidget);
 
 namespace Terminal {
 namespace Internal {
 
-class TerminalContainer;
+class TerminalContainer : public QWidget
+{
+    Q_OBJECT
+
+public:
+    TerminalContainer(QWidget *parent);
+    void initializeTerm();
+
+    QTermWidget *termWidget() const { return m_termWidget; }
+
+signals:
+    void termInitialized();
+
+private slots:
+    void contextMenuRequested(const QPoint &);
+    void copyAvailable(bool);
+    void copyInvoked();
+    void pasteInvoked();
+    void closeInvoked();
+    void finishedInvoked();
+
+private:
+    QVBoxLayout *m_layout;
+    QTermWidget *m_termWidget;
+    QAction *m_copy;
+    QAction *m_paste;
+    QAction *m_close;
+    QWidget *m_parent;
+};
 
 class TerminalWindow : public Core::IOutputPane
 {
@@ -37,6 +67,9 @@ public:
     virtual bool canPrevious() const;
     virtual void goToNext();
     virtual void goToPrev();
+
+private slots:
+    void termInitialized();
 
 private:
     TerminalContainer *m_terminalContainer;
