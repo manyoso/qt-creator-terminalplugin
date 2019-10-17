@@ -37,12 +37,12 @@ private slots:
     void finishedInvoked();
 
 private:
-    QVBoxLayout *m_layout;
-    QTermWidget *m_termWidget;
-    QAction *m_copy;
-    QAction *m_paste;
-    QAction *m_close;
-    QWidget *m_parent;
+    QVBoxLayout *m_layout = nullptr;
+    QTermWidget *m_termWidget = nullptr;
+    QAction *m_copy = nullptr;
+    QAction *m_paste = nullptr;
+    QAction *m_close = nullptr;
+    QWidget *m_parent = nullptr;
 };
 
 class TerminalWindow : public Core::IOutputPane
